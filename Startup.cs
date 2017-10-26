@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RestauranteApi.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Infra.UnitOfWork;
+using Contract;
 
 namespace RestauranteApi
 {
@@ -19,9 +21,11 @@ namespace RestauranteApi
     public void ConfigureServices(IServiceCollection services)
     {
       string connectionString = @"Host=localhost;Database=app;Username=app;Password=123";
-      services.AddDbContext<AppDbContext>(options => 
+      services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(connectionString)
       );
+      services.AddSingleton<IUnitOfWork, UnitOfWork>();
+      services.AddMvc();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,9 +36,11 @@ namespace RestauranteApi
         app.UseDeveloperExceptionPage();
       }
 
+      app.UseMvc();
+
       app.Run(async (context) =>
       {
-        await context.Response.WriteAsync("Funcionando... hehe!");
+        await context.Response.WriteAsync("Rota não encontrada!");
       });
     }
   }

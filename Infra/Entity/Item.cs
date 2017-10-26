@@ -9,7 +9,7 @@ namespace RestauranteApi.Infra.Entity
     public string Descricao { get; set; }
     public string UrlImagem { get; set; }
     public string Categoria { get; set; }
-    public decimal Valor { get; set; }
+    public double Valor { get; set; }
     public ICollection<ItemPedido> ItemPedido { get; set; }
   }
 }
