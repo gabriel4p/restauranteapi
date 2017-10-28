@@ -1,3 +1,5 @@
+using Microsoft.Rest;
+
 namespace RestauranteApi.DTO
 {
   public class Item
@@ -8,5 +10,11 @@ namespace RestauranteApi.DTO
     public string UrlImagem { get; set; }
     public string Categoria { get; set; }
     public double Valor { get; set; }
+
+    public void Validate()
+    {
+      if (string.IsNullOrEmpty(Titulo))
+        throw new ValidationException("");
+    }
   }
 }
