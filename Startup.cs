@@ -9,8 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using RestauranteApi.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Infra.UnitOfWork;
-using Contract;
+using RestauranteApi.Infra.UnitOfWork;
+using RestauranteApi.Contract;
+using AutoMapper;
 
 namespace RestauranteApi
 {
@@ -20,12 +21,13 @@ namespace RestauranteApi
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      string connectionString = @"Host=ec2-54-204-32-145.compute-1.amazonaws.com;Database=d4c2sd0kaho4tr;Username=nteyshyqpjkhhf;Password=fdf6d0926669601105e63c9904728b6166e84a3e14351a43ca21de740de9f0ba;SslMode=Require; UseSSLStream=true";
-      //string connectionString = @"Host=localhost;Database=app;Username=app;Password=123";
+      //string connectionString = @"Host=ec2-54-204-32-145.compute-1.amazonaws.com;Database=d4c2sd0kaho4tr;Username=nteyshyqpjkhhf;Password=fdf6d0926669601105e63c9904728b6166e84a3e14351a43ca21de740de9f0ba;SslMode=Require; UseSSLStream=true";
+      string connectionString = @"Host=localhost;Database=app;Username=app;Password=123";
       services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(connectionString)
       );
       services.AddSingleton<IUnitOfWork, UnitOfWork>();
+      services.AddAutoMapper();
       services.AddMvc();
     }
 
@@ -36,6 +38,8 @@ namespace RestauranteApi
       {
         app.UseDeveloperExceptionPage();
       }
+
+      app.UseStaticFiles();
 
       app.UseMvc();
 

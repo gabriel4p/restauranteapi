@@ -1,6 +1,6 @@
-using Infra.Repository;
+using RestauranteApi.Infra.Repository;
 
-namespace Contract
+namespace RestauranteApi.Contract
 {
   public interface IUnitOfWork
   {

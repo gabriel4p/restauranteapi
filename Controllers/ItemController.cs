@@ -1,48 +1,93 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Contract;
+using AutoMapper;
+using RestauranteApi.Contract;
 using Microsoft.AspNetCore.Mvc;
-using RestauranteApi.Infra.Context;
 using RestauranteApi.Infra.Entity;
 
-namespace Controllers
+namespace RestauranteApi.Controllers
 {
   [Route("api/[controller]")]
   public class ItemController : BaseController
   {
-    public ItemController(IUnitOfWork uow) : base(uow) { }
-    public object Get()
+    public ItemController(IUnitOfWork uow, IMapper mapper) : base(uow, mapper) { }
+
+    [HttpGet("{id}")]
+    public DTO.Response Get(int id)
     {
       try
       {
-        //return _context.Item.ToList();
-        // Item item = new Item()
-        // {
-        //   Categoria = "Prato",
-        //   Titulo = "Massa Carbonara",
-        //   Descricao = "Uma maravilhosa massa ao queijo",
-        //   UrlImagem = "http://imagem.com",
-        //   Valor = 28.97
-        // };
-
-        // _context.Item.Add(item);
-
-        // item = new Item()
-        // {
-        //   Categoria = "Sobremesa",
-        //   Titulo = "Mousse Maracujá",
-        //   Descricao = "Mousse para complementar uma boa refeição.",
-        //   UrlImagem = "http://imagem.com",
-        //   Valor = 7.32
-        // };
-
-        // _context.Item.Add(item);
-        // _context.SaveChanges();
-        return _uow.Item.GetAll().ToList();
+        var item = _uow.Item.GetById(id);
+        var dto = _mapper.Map<DTO.Item>(item);
+        return CreateResponse(item);
       }
       catch (Exception ex)
       {
-        return ex;
+        return CreateResponse(ex, 500);
+      }
+    }
+
+    [HttpGet]
+    public DTO.Response Get()
+    {
+      try
+      {
+        var items = _uow.Item.GetAll();
+        var dto = _mapper.Map<List<DTO.Item>>(items);
+        return CreateResponse(dto);
+      }
+      catch (Exception ex)
+      {
+        return CreateResponse(ex, 500);
+      }
+    }
+
+    [HttpPut]
+    public DTO.Response Put(DTO.Item item)
+    {
+      try
+      {
+        _uow.Item.Update(_mapper.Map<Item>(item));
+        _uow.Save();
+        return Ok("Atualizado com sucesso!");
+      }
+      catch (Exception ex)
+      {
+        return CreateResponse(ex, 500);
+      }
+    }
+
+    [HttpPost]
+    public DTO.Response Post(DTO.Item item)
+    {
+      try
+      {
+        _uow.Item.Add(_mapper.Map<Item>(item));
+        _uow.Save();
+        return Ok("Atualizado com sucesso!");
+      }
+      catch (Exception ex)
+      {
+        return CreateResponse(ex, 500);
+      }
+    }
+
+    [HttpDelete]
+    public DTO.Response Delete(int id)
+    {
+      try
+      {
+        var item = _uow.Item.GetById(id);
+        if (item == null)
+          return NotFound();
+        _uow.Item.Remove(item);
+        _uow.Save();
+        return Ok("Removido com sucesso!");
+      }
+      catch (Exception ex)
+      {
+        return CreateResponse(ex, 500);
       }
     }
   }

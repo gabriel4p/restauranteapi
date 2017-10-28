@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DTO
+namespace RestauranteApi.DTO
 {
   public class Pedido
   {

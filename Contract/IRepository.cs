@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Contract
+namespace RestauranteApi.Contract
 {
   public interface IRepository<T>
   {
@@ -11,6 +11,6 @@ namespace Contract
     T GetById(int id);
     void Add(T t);
     void Update(T t);
-    void Delete(int id);
+    void Remove(T t);
   }
 }

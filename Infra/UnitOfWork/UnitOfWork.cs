@@ -1,9 +1,9 @@
-using Contract;
-using Infra.Repository;
+using RestauranteApi.Contract;
+using RestauranteApi.Infra.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
 using RestauranteApi.Infra.Context;
 
-namespace Infra.UnitOfWork
+namespace RestauranteApi.Infra.UnitOfWork
 {
   public class UnitOfWork : IUnitOfWork
   {

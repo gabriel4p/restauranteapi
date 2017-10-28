@@ -1,4 +1,4 @@
-namespace DTO
+namespace RestauranteApi.DTO
 {
   public class Item
   {

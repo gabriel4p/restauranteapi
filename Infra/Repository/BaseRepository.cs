@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
-namespace Infra.Repository
+namespace RestauranteApi.Infra.Repository
 {
   public abstract class BaseRepository<T> where T : class
   {
@@ -12,7 +13,7 @@ namespace Infra.Repository
     protected readonly DbSet<T> _dbSet;
 
     public BaseRepository(AppDbContext context)
-    {      
+    {
       _context = context;
       _dbSet = _context.Set<T>();
     }
@@ -30,9 +31,9 @@ namespace Infra.Repository
     {
       _dbSet.Update(t);
     }
-    public void Delete(int id)
+    public void Remove(T t)
     {
-
+      _dbSet.Remove(t);
     }
   }
 }

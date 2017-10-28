@@ -1,9 +1,9 @@
 using System.Linq;
-using Contract;
+using RestauranteApi.Contract;
 using RestauranteApi.Infra.Context;
 using RestauranteApi.Infra.Entity;
 
-namespace Infra.Repository
+namespace RestauranteApi.Infra.Repository
 {
   public class PedidoRepository : BaseRepository<Pedido>, IRepository<Pedido>
   {
