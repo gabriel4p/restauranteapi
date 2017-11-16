@@ -21,8 +21,7 @@ namespace RestauranteApi
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      //string connectionString = @"Host=ec2-54-204-32-145.compute-1.amazonaws.com;Database=d4c2sd0kaho4tr;Username=nteyshyqpjkhhf;Password=fdf6d0926669601105e63c9904728b6166e84a3e14351a43ca21de740de9f0ba;SslMode=Require; UseSSLStream=true";
-      string connectionString = @"Host=localhost;Database=app;Username=app;Password=123";
+      string connectionString = Environment.GetEnvironmentVariable("RestaurantConnectionString");
       services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(connectionString)
       );
