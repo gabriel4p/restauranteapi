@@ -5,9 +5,9 @@ using RestauranteApi.Contract;
 
 namespace RestauranteApi.Helpers.Specification
 {
-  public class NullOrDefaultPropertyExpecification<T> : BaseSpecification<T>, ISpecification
+  public class NullOrDefaultPropertySpecification<T> : BaseSpecification<T>, ISpecification
   {
-    public NullOrDefaultPropertyExpecification(T target, params Expression<Func<T, object>>[] expressions)
+    public NullOrDefaultPropertySpecification(T target, params Expression<Func<T, object>>[] expressions)
       : base(target, "A propriedade '{0}' de '{1}' não pode ser nula ou possuir valor padrão.", expressions)
     {
 
@@ -20,7 +20,10 @@ namespace RestauranteApi.Helpers.Specification
         MemberExpression memberExpression = GetMemberExpression(exp);
         string propertyName = memberExpression.Member.Name;
         object propertyValue = _target.GetType().GetRuntimeProperty(propertyName).GetValue(_target);
-        if (propertyValue.GetType() == typeof(string))
+
+        if (propertyValue == null)
+          ThrowSpecificationException(propertyName);
+        else if (propertyValue.GetType() == typeof(string))
         {
           if (string.IsNullOrEmpty((string)propertyValue))
             ThrowSpecificationException(propertyName);

@@ -5,6 +5,7 @@ using AutoMapper;
 using RestauranteApi.Contract;
 using Microsoft.AspNetCore.Mvc;
 using RestauranteApi.Infra.Entity;
+using RestauranteApi.Helpers.Specification;
 
 namespace RestauranteApi.Controllers
 {
@@ -24,7 +25,7 @@ namespace RestauranteApi.Controllers
       }
       catch (Exception ex)
       {
-        return CreateResponse(ex, 500);
+        return CreateResponse(ex);
       }
     }
 
@@ -39,7 +40,7 @@ namespace RestauranteApi.Controllers
       }
       catch (Exception ex)
       {
-        return CreateResponse(ex, 500);
+        return CreateResponse(ex);
       }
     }
 
@@ -54,7 +55,7 @@ namespace RestauranteApi.Controllers
       }
       catch (Exception ex)
       {
-        return CreateResponse(ex, 500);
+        return CreateResponse(ex);
       }
     }
 
@@ -63,13 +64,19 @@ namespace RestauranteApi.Controllers
     {
       try
       {
+        new NullOrDefaultPropertySpecification<DTO.Item>(item, 
+        p => p.Categoria,
+        p => p.Descricao,
+        p => p.Titulo,
+        p => p.Valor,
+        p => p.UrlImagem).Validate();
         _uow.Item.Add(_mapper.Map<Item>(item));
         _uow.Save();
-        return Ok("Atualizado com sucesso!");
+        return Ok("Inserido com sucesso!");
       }
       catch (Exception ex)
       {
-        return CreateResponse(ex, 500);
+        return CreateResponse(ex);
       }
     }
 
@@ -87,7 +94,7 @@ namespace RestauranteApi.Controllers
       }
       catch (Exception ex)
       {
-        return CreateResponse(ex, 500);
+        return CreateResponse(ex);
       }
     }
   }

@@ -1,6 +1,8 @@
+using System;
 using AutoMapper;
 using RestauranteApi.Contract;
 using RestauranteApi.DTO;
+using RestauranteApi.Helpers.Specification;
 using RestauranteApi.Infra.Context;
 
 namespace RestauranteApi.Controllers
@@ -21,9 +23,10 @@ namespace RestauranteApi.Controllers
       return new Response() { Data = data };
     }
 
-    protected Response CreateResponse(System.Exception ex, int statusCode)
+    protected Response CreateResponse(Exception ex)
     {
-      return new Response() { Message = ex.Message, StatusCode = statusCode };
+      int status = ex is SpecificationException ? 422 : 500;      
+      return new Response() { Message = ex.Message, StatusCode = status, Exception = ex };
     }
 
     protected Response NotFound()

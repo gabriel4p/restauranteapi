@@ -14,5 +14,6 @@ namespace RestauranteApi.Infra.Context
     }
     public DbSet<Item> Item { get; set; }
     public DbSet<Pedido> Pedido { get; set; }
+    public DbSet<Log> Log { get; set; }
   }
 }
