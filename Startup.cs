@@ -41,6 +41,12 @@ namespace RestauranteApi
       app.UseStaticFiles();
 
       app.UseMvc();
+
+      app.Run(async (context) =>
+        {
+          if (context.Request.Path.Value == "/")
+            context.Response.Redirect("index.html");
+        });
     }
   }
 }

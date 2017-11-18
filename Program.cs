@@ -14,13 +14,15 @@ namespace RestauranteApi
   {
     public static void Main(string[] args)
     {
-      BuildWebHost(args).Run();
+      string portEnv = Environment.GetEnvironmentVariable("PORT");
+      string url = string.IsNullOrEmpty(portEnv) ? $"http://*:4000/" : $"http://*:{portEnv}/";
+      BuildWebHost(url, args).Run();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
+    public static IWebHost BuildWebHost(string url, string[] args) =>
         WebHost.CreateDefaultBuilder(args)
             .UseStartup<Startup>()
-            .UseUrls("http://*:5000/")
+            .UseUrls(url)
             .Build();
   }
 }
