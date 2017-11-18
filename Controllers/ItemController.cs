@@ -44,33 +44,22 @@ namespace RestauranteApi.Controllers
       }
     }
 
-    [HttpPut]
-    public DTO.Response Put(DTO.Item item)
-    {
-      try
-      {
-        _uow.Item.Update(_mapper.Map<Item>(item));
-        _uow.Save();
-        return Ok("Atualizado com sucesso!");
-      }
-      catch (Exception ex)
-      {
-        return CreateResponse(ex);
-      }
-    }
-
     [HttpPost]
     public DTO.Response Post(DTO.Item item)
     {
       try
       {
-        new NullOrDefaultPropertySpecification<DTO.Item>(item, 
-        p => p.Categoria,
-        p => p.Descricao,
-        p => p.Titulo,
-        p => p.Valor,
-        p => p.UrlImagem).Validate();
-        _uow.Item.Add(_mapper.Map<Item>(item));
+        new NullOrDefaultPropertySpecification<DTO.Item>(item,
+          p => p.Categoria,
+          p => p.Descricao,
+          p => p.Titulo,
+          p => p.Valor,
+          p => p.UrlImagem).Validate();
+
+        if (item.Id == 0)
+          _uow.Item.Add(_mapper.Map<Item>(item));
+        else
+          _uow.Item.Update(_mapper.Map<Item>(item));
         _uow.Save();
         return Ok("Inserido com sucesso!");
       }

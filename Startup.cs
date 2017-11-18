@@ -21,7 +21,7 @@ namespace RestauranteApi
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-      string connectionString = Environment.GetEnvironmentVariable("RestaurantConnectionString");
+      string connectionString = Environment.GetEnvironmentVariable("RestauranteConnectionString");
       services.AddDbContext<AppDbContext>(options =>
         options.UseNpgsql(connectionString)
       );
@@ -41,11 +41,6 @@ namespace RestauranteApi
       app.UseStaticFiles();
 
       app.UseMvc();
-
-      app.Run(async (context) =>
-      {
-        await context.Response.WriteAsync("Rota não encontrada!");
-      });
     }
   }
 }

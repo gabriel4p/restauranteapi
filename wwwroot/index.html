@@ -1,24 +1,49 @@
 <html>
 
+<head>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/js/lib/vue-2.5.2.js"></script>
+  <script src="/js/lib/axios.js"></script>
+</head>
+
 <body>
-  <div id="app">
-    {{ message }}
-    <button v-on:click="imprimirMensagem">Imprimir</button>
+
+  <!-- component template -->
+  <script type="text/x-template" id="grid-template">
+  <table>
+    <thead>
+      <tr>
+        <th v-for="key in columns"
+          @click="sortBy(key)"
+          :class="{ active: sortKey == key }">
+          {{ key | capitalize }}
+          <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'">
+          </span>
+        </th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="entry in filteredData">
+        <td v-for="key in columns">
+          {{entry[key]}}
+        </td>
+        <td><button class="btn btn-info">Update</button></td>
+          <td><button class="btn btn-danger">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+</script>
+  <div id="vue-grid">
+    <form id="search">
+      Search
+      <input name="query" v-model="searchQuery">
+    </form>
+    <vue-grid :data="gridData" :columns="gridColumns" :filter-key="searchQuery">
+    </vue-grid>
   </div>
-  <script src="/js/vue-2.5.2.js"></script>
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Hello Vue!'
-      },
-      methods: {
-        imprimirMensagem: function () {
-          console.log(this.message);
-        }
-      }
-    })  
-  </script>
+  <script src="/js/script.js"></script>
 </body>
 
 </html>
