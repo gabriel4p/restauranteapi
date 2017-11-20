@@ -15,7 +15,7 @@ namespace RestauranteApi
     public static void Main(string[] args)
     {
       string portEnv = Environment.GetEnvironmentVariable("PORT");
-      string url = string.IsNullOrEmpty(portEnv) ? $"http://*:4000/" : $"http://*:{portEnv}/";
+      string url = string.IsNullOrEmpty(portEnv) ? $"http://*:5000/" : $"http://*:{portEnv}/";
       BuildWebHost(url, args).Run();
     }
 
