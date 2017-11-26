@@ -4,10 +4,8 @@ import HttpStatus from 'http-status'
 import sha1 from 'sha1'
 import Dropbox from 'dropbox'
 
-import config from '../config'
-const configServer = config[process.env.NODE_ENV]
-const dbx = new Dropbox({ accessToken: configServer.serverToken });
-const permissionToken = configServer.serverToken
+import Config from '../config'
+const dbx = new Dropbox({ accessToken: Config.ServerToken })
 
 const generateHashFile = (fileName) => {
   return sha1(new Date()).substring(0, 8) + fileName.toLowerCase()
@@ -77,12 +75,6 @@ export default class Controller {
   }
 
   createImage(req, res) {
-    if (req.headers.token != permissionToken) {
-      res.status(HttpStatus.UNAUTHORIZED)
-      res.end('Unauthorized.')
-      return
-    }
-
     const fileName = generateHashFile(req.file.originalname)
 
     dbx.filesUpload({ path: '/' + fileName, contents: req.file.buffer })
