@@ -1,0 +1,30 @@
+{
+  "name": "restaurante-pedidos",
+  "version": "0.0.1",
+  "proxy": "http://localhost:3001/",
+  "devDependencies": {
+    "enzyme": "2.4.1",
+    "react-addons-test-utils": "15.4.0",
+    "react-scripts": "0.8.5",
+    "redux-logger": "^3.0.6"
+  },
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-plugin-transform-class-properties": "6.22.0",
+    "ramda": "^0.25.0",
+    "react": "15.4.0",
+    "react-dom": "15.4.0",
+    "react-image-resizer": "^1.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "semantic-ui-css": "^2.2.12"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
