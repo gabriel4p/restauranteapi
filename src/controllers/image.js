@@ -11,7 +11,7 @@ const generateHashFile = (fileName) => {
   return sha1(new Date()).substring(0, 8) + fileName.toLowerCase()
 }
 
-let dropboxFileNames = () => {
+const dropboxFileNames = () => {
   return dbx.filesListFolder({ path: '' })
     .then(response => {
       let names = []
@@ -40,7 +40,8 @@ export default class Controller {
   get(req, res) {
     const { name } = req.params
 
-    const filePath = path.join(__dirname, '../temp', name)
+    const filePath = path.join(__dirname, '..', 'temp', name)
+    console.log(filePath)
     fs.stat(filePath, (err) => {
       if (err) {
         existsInDropBox(name)
@@ -78,7 +79,7 @@ export default class Controller {
     const fileName = generateHashFile(req.file.originalname)
 
     dbx.filesUpload({ path: '/' + fileName, contents: req.file.buffer })
-      .then((result) => {
+      .then(() => {
         res.json({ fileName: fileName })
         console.log(fileName)
       })

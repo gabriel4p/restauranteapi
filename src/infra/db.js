@@ -8,7 +8,11 @@ const connectionConfig = {
     ssl: true
   }
 }
-const sequelize = new Sequelize(Config.DbConnectionString, connectionConfig)
+
+if(!Config.DatabaseUrl)
+throw "Defina a string de conxão com o banco"
+
+const sequelize = new Sequelize(Config.DatabaseUrl, connectionConfig)
 
 module.exports = {
   Item: Item(sequelize, Sequelize)
