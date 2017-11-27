@@ -2,6 +2,7 @@ import Sequelize from 'sequelize'
 import Item from './models/item'
 import Config from '../config'
 
+
 const connectionConfig = {
   logging: false,
   dialectOptions: {
