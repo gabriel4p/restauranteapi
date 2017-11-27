@@ -27,17 +27,16 @@ const existsInDropBox = (name) => {
   return dropboxFileNames()
     .then(names => {
       let exists = false
-      for (let i = 0; i < names.length && !exists; i++)
-        if (names[i] == name)
-          exists = true
+      for (let i = 0; i < names.length && !exists; i++) {
+        if (names[i] == name) { exists = true }
+      }
       return exists
     })
     .catch(err => { throw err })
 }
 
 export default class Controller {
-
-  get(req, res) {
+  get (req, res) {
     const { name } = req.params
 
     const filePath = path.join(__dirname, '..', 'temp', name)
@@ -66,16 +65,16 @@ export default class Controller {
       } else {
         res.sendFile(filePath, { root: '/' })
       }
-    });
+    })
   }
 
-  getAllImageNames(req, res) {
+  getAllImageNames (req, res) {
     dropboxFileNames()
       .then(names => res.json(names))
-      .catch(err => res.end(err));
+      .catch(err => res.end(err))
   }
 
-  createImage(req, res) {
+  createImage (req, res) {
     const fileName = generateHashFile(req.file.originalname)
 
     dbx.filesUpload({ path: '/' + fileName, contents: req.file.buffer })

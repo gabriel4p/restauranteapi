@@ -10,7 +10,7 @@ export default class Item extends Component {
     const {
       getItem,
       location: {
-        pathname,
+        pathname
       }
     } = this.props
 

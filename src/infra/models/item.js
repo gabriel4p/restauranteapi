@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'Valor'
     }
   }, {
-      tableName: 'Item',
-      undercored: false,
-      updatedAt: false,
-      createdAt: false
-    })
+    tableName: 'Item',
+    undercored: false,
+    updatedAt: false,
+    createdAt: false
+  })
   return Item
 }

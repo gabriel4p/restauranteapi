@@ -16,8 +16,7 @@ const validation = (item) => {
 }
 
 export default class Controller {
-
-  getAll(req, res) {
+  getAll (req, res) {
     Item.findAll()
       .then(result => { res.json({items: result}) })
       .catch(err => {
@@ -26,7 +25,7 @@ export default class Controller {
       })
   }
 
-  getById(req, res) {
+  getById (req, res) {
     const id = req.params.id
     if (isNaN(id)) {
       res.end('Identificador inválido.')
@@ -39,10 +38,9 @@ export default class Controller {
         res.status(500)
         res.end('ItemController.getById() => ' + err.message)
       })
-
   }
 
-  update(req, res) {
+  update (req, res) {
     const item = req.body
     const msg = validation(item)
     if (msg) {
@@ -68,7 +66,7 @@ export default class Controller {
       .catch(err => res.end('Item.findOne() => ' + err.message))
   }
 
-  create(req, res) {
+  create (req, res) {
     const item = req.body
     const msg = validation(item)
     if (msg) {
@@ -81,7 +79,7 @@ export default class Controller {
       .catch(err => res.end('Item.create() => ' + err.message))
   }
 
-  delete(req, res) {
+  delete (req, res) {
     const id = req.params.id
     Item.destroy({ where: { id: id } })
       .then(result => res.end('Removido com sucesso.'))

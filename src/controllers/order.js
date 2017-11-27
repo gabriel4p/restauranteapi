@@ -4,8 +4,7 @@ import HttpStatus from 'http-status'
 import sha1 from 'sha1'
 
 export default class Controller {
-
-  getAll(req, res) {
+  getAll (req, res) {
     res.json({
       orders: [
         {

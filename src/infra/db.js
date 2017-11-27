@@ -2,7 +2,6 @@ import Sequelize from 'sequelize'
 import Item from './models/item'
 import Config from '../config'
 
-
 const connectionConfig = {
   logging: false,
   dialectOptions: {
@@ -10,8 +9,7 @@ const connectionConfig = {
   }
 }
 
-if(!Config.DatabaseUrl)
-throw "Defina a string de conxão com o banco"
+if (!Config.DatabaseUrl) { throw 'Defina a string de conxão com o banco' }
 
 const sequelize = new Sequelize(Config.DatabaseUrl, connectionConfig)
 
