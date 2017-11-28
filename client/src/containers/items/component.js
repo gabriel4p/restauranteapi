@@ -25,23 +25,28 @@ export default class Items extends Component {
       return <ErrorMessage />
     } else {
       return (
-        <table className='ui celled table'>
-          <thead>
-            <tr><th>Código</th>
-              <th>Nome</th>
-              <th>Valor</th>
-              <th>Editar</th>
-            </tr></thead>
-          <tbody>
-            { items.map(item =>
-              <tr key={item.id}>
-                <td>{ item.id }</td>
-                <td>{ item.name }</td>
-                <td>{ item.value }</td>
-                <td><Link to={`/item/${item.id}`}>Editar</Link></td>
-              </tr>) }
-          </tbody>
-        </table>
+        <div className='ui'>
+          <table className='ui celled table'>
+            <thead>
+              <tr><th>Código</th>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Editar</th>
+              </tr></thead>
+            <tbody>
+              { items.map(item =>
+                <tr key={item.id}>
+                  <td>{ item.id }</td>
+                  <td>{ item.name }</td>
+                  <td>{ item.value }</td>
+                  <td><Link to={`/item/${item.id}`}>Editar</Link></td>
+                </tr>) }
+            </tbody>
+
+          </table>
+          <Link to='/item' className='ui primary button'>Novo item</Link>
+
+        </div>
       )
     }
   }

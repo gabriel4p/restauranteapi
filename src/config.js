@@ -1,8 +1,7 @@
-import dotenv from 'dotenv'
-
-try {  
+try {
+  const dotenv = require('dotenv')
   dotenv.load()
-} catch (e) { 
+} catch (e) {
   console.log('erro ao carregar ".env" ')
   console.log(e)
 }

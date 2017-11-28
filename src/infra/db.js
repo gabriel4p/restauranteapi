@@ -12,8 +12,7 @@ const connectionConfig = {
   }
 }
 
-if (!Config.DatabaseUrl)
-  throw "Defina a string de conxão com o banco"
+if (!Config.DatabaseUrl) throw "Defina a string de conxão com o banco"
 
 const sequelize = new Sequelize(Config.DatabaseUrl, connectionConfig)
 let db = { sequelize: sequelize }

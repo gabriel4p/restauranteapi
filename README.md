@@ -9,5 +9,6 @@
 ```
 git clone https://github.com/boniattirodrigo/restaurante-api.git
 yarn add && cd client && yarn add && cd ..
+mv .env.example .env # Configure suas .envs
 yarn start
 ```

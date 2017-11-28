@@ -8,12 +8,11 @@ const multer = Multer({
   limits: {
     fileSize: _5MB
   }
-});
+})
 
 const controller = new Controller()
 
 module.exports = function (app) {
-
   app.get('/image/:name', controller.get)
 
   app.get('/imageall', controller.getAllImageNames)
