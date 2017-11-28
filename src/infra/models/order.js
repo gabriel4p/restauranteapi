@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     resume: {
       type: DataTypes.STRING,
       field: 'Resumo'
+    },
+    ok: {
+      type: DataTypes.INTEGER,
+      field: 'Atendido'
     }
   }, {
       classMethods: {

@@ -76,4 +76,17 @@ export default class Controller {
     }).then(result => res.end('Removido com sucesso.'))
       .catch(err => res.end(err.message))
   }
+
+  ok(req, res) {
+    const order = req.body
+
+    if (isNaN(order.id)) {
+      res.end('Parâmetro "id" inválido')
+      return
+    }
+
+    Order.update({ ok: order.ok ? 1 : 0 }, { where: { id: order.id } })
+      .then(result => res.end('Situação alterada com sucesso.'))
+      .catch(err => res.end(err.message))
+  }
 }
