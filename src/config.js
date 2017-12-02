@@ -8,5 +8,6 @@ try {
 
 module.exports = {
   DatabaseUrl: process.env.DATABASE_URL,
-  ServerToken: process.env.SERVER_TOKEN
+  ServerToken: process.env.SERVER_TOKEN,
+  TokenFCM: process.env.TOKEN_FCM
 }
