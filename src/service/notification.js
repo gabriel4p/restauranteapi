@@ -1,20 +1,18 @@
 import FCM from 'fcm-push'
-
-const serverKey = 'AAAAISfXvQ8:APA91bF9mTkNplr5RSX1BRKiMHxwMl_LuF5CZcU9ELEGFShnaUJHAaSOACCqoRsYFtaWXeV6ADGxvpyAsJx4l0CONsqHtthF3WOP-vWrazdhsZLcCP3CNzmcvFFFC007bagVB-WhtBCw'
+import Config from '../config'
 
 var fcm = null
 try {
-  fcm = new FCM(serverKey)
-  console.log('FCM OK')
-
+  fcm = new FCM(Config.TokenFCM)
 } catch (e) {
-
+  console.log('ERRO FCM')
+  console.log(e.message)
 }
 
 module.exports = {
-  sendMessage: (userToken, title, body) => {
+  sendMessage: (userTokens, title, body) => {
     const message = {
-      to: userToken,
+      registration_ids: userTokens,
       notification: {
         title: title,
         body: body

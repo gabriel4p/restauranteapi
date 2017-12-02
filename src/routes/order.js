@@ -8,5 +8,4 @@ module.exports = function (app) {
   app.post('/api/orders', controller.create)
   app.delete('/api/orders/:id', controller.delete)
   app.post('/api/orders/ok', controller.ok)
-  app.post('/api/orders/push', controller.sendPushNotification)
 }

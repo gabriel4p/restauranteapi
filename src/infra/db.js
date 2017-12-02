@@ -1,7 +1,4 @@
 import Sequelize from 'sequelize'
-import Item from './models/item'
-import Order from './models/order'
-import ItemOrder from './models/itemOrder'
 import Config from '../config'
 import fs from 'fs'
 import path from 'path'

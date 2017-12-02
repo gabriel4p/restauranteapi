@@ -1,7 +1,6 @@
 import HttpStatus from 'http-status'
 import notification from '../service/notification'
-import { sequelize, Order, Item, ItemOrder } from '../infra/db'
-notification.sendMessage()
+import { sequelize, Token, Order, Item, ItemOrder } from '../infra/db'
 
 const validate = (order) => {
   let msg = ''
@@ -79,17 +78,6 @@ export default class Controller {
       .catch(err => res.end(err.message))
   }
 
-  sendPushNotification(req, res) {
-    const push = req.body
-    notification.sendMessage(push.token, push.title, push.body)
-      .then(() => {
-        res.end('Usuário notificado.')
-      }).catch((e) => {
-        console.log(e)
-        res.json({ erro: 'Não foi possível o envio', message: e.message })
-      })
-  }
-
   ok(req, res) {
 
     const order = req.body
@@ -109,12 +97,18 @@ export default class Controller {
 
         Order.update({ ok: order.ok ? 1 : 0 }, { where: { id: order.id } })
           .then(() => {
-            notification.sendMessage('Pedido', 'O pedido da mesa ' + orderDb.table + ' está pronto.')
-              .then(() => {
-                res.end('Aprovado com sucesso, os atendentes foram notificados.')
-              }).catch(() => {
-                res.end('Pedido aprovado, mas os atendentes não puderam ser notificados.')
-              })
+            Token.findAll().then((tokens) => {
+              notification.sendMessage(tokens.map(p => p.token), 'Pedido', 'O pedido da mesa ' + orderDb.table + ' está pronto.')
+                .then(() => {
+                  res.end('Aprovado com sucesso, os atendentes foram notificados.')
+                }).catch((e) => {
+                  console.log(e.message)
+                  res.end('Pedido aprovado, mas os atendentes não puderam ser notificados.')
+                })
+            }).catch((e) => {
+              console.log(e.message)
+              res.end('Pedido aprovado, mas os atendentes não puderam ser notificados.')
+            })
           })
           .catch(err => res.end(err.message))
       })
