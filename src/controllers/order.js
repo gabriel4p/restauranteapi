@@ -71,7 +71,7 @@ export default class Controller {
 
           return Promise.all(promisses)
         })
-    }).then(result => res.json(result))
+    }).then(() => res.json({ data: 'Pedido criado com sucesso.' }))
       .catch(err => res.json({ data: err.message }))
   }
 
