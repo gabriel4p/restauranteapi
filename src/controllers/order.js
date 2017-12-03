@@ -16,8 +16,22 @@ export default class Controller {
 
   getAll(req, res) {
     Order.findAll({ include: Item })
-      .then(result => { res.json({ orders: result }) })
-      .catch(err => res.end(err.message))
+      .then(result => {
+        let orders = []
+        for (let i = 0; i < result.length; i++) {
+          orders.push({
+            id: result[i].id,
+            date: result[i].date,
+            table: result[i].table,
+            name: result[i].name,
+            resume: result[i].resume,
+            status: result[i].ok ? 'Atendido' : 'Pendente',
+            items: result[i].Items
+          })
+        }
+        res.json({ orders: orders })
+      })
+      .catch(err => res.json({ data: err.message }))
   }
 
   getById(req, res) {
@@ -25,13 +39,13 @@ export default class Controller {
     const id = req.params.id
 
     if (isNaN(id)) {
-      res.end('Parâmetro inválido')
+      res.json({ data: 'Parâmetro inválido' })
       return
     }
 
     Order.findOne({ where: { id: id }, include: Item })
       .then(result => { res.json(result) })
-      .catch(err => res.end(err.message))
+      .catch(err => res.json({ data: err.message }))
   }
 
   create(req, res) {
@@ -40,7 +54,7 @@ export default class Controller {
     const msg = validate(order)
 
     if (msg) {
-      res.end(msg)
+      res.json({ data: msg })
       return
     }
 
@@ -58,14 +72,14 @@ export default class Controller {
           return Promise.all(promisses)
         })
     }).then(result => res.json(result))
-      .catch(err => res.end(err.message))
+      .catch(err => res.json({ data: err.message }))
   }
 
   delete(req, res) {
     const id = req.params.id
 
     if (isNaN(id)) {
-      res.end('Parâmetro inválido')
+      res.json({ data: 'Parâmetro inválido' })
       return
     }
 
@@ -74,8 +88,8 @@ export default class Controller {
         .then(result => {
           return Order.destroy({ where: { id: id } }, { transaction: t })
         })
-    }).then(result => res.end('Removido com sucesso.'))
-      .catch(err => res.end(err.message))
+    }).then(result => res.json({ data: 'Removido com sucesso.' }))
+      .catch(err => res.json({ data: err.message }))
   }
 
   ok(req, res) {
@@ -83,7 +97,7 @@ export default class Controller {
     const order = req.body
 
     if (isNaN(order.id)) {
-      res.end('Parâmetro "id" inválido')
+      res.json({ data: 'Parâmetro "id" inválido' })
       return
     }
 
@@ -91,7 +105,7 @@ export default class Controller {
       .then(orderDb => {
 
         if (!orderDb) {
-          res.end('O pedido informado não existe')
+          res.json({ data: 'O pedido informado não existe' })
           return
         }
 
@@ -100,18 +114,18 @@ export default class Controller {
             Token.findAll().then((tokens) => {
               notification.sendMessage(tokens.map(p => p.token), 'Pedido', 'O pedido da mesa ' + orderDb.table + ' está pronto.')
                 .then(() => {
-                  res.end('Aprovado com sucesso, os atendentes foram notificados.')
+                  res.json({ data: 'Aprovado com sucesso, os atendentes foram notificados.' })
                 }).catch((e) => {
                   console.log(e.message)
-                  res.end('Pedido aprovado, mas os atendentes não puderam ser notificados.')
+                  res.json({ data: 'Pedido aprovado, mas os atendentes não puderam ser notificados.' })
                 })
             }).catch((e) => {
               console.log(e.message)
-              res.end('Pedido aprovado, mas os atendentes não puderam ser notificados.')
+              res.json({ data: 'Pedido aprovado, mas os atendentes não puderam ser notificados.' })
             })
           })
-          .catch(err => res.end(err.message))
+          .catch(err => res.json({ data: err.message }))
       })
-      .catch(err => res.end(err.message))
+      .catch(err => res.json({ data: err.message }))
   }
 }
