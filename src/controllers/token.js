@@ -5,7 +5,7 @@ export default class Controller {
     const oldToken = req.body.oldToken
     const newToken = req.body.newToken
     if (!newToken) {
-      res.json('Informe os tokens.')
+      res.json({ data: 'Informe os tokens.' })
       return
     }
 
