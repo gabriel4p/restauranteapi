@@ -4,7 +4,6 @@ import { sequelize, Token, Order, Item, ItemOrder } from '../infra/db'
 
 const validate = (order) => {
   let msg = ''
-  if (!order.date || (new Date(order.date)).toString() == 'Invalid Date') msg = 'Data do pedido é inválida.'
   if (!order.resume) msg = 'Resumo inválido'
   if (isNaN(order.table) || order.table < 1) msg = 'Mesa inválida'
   if (!order.name) msg = 'O nome do representante da mesa é inválido'
@@ -63,6 +62,8 @@ export default class Controller {
       res.json({ data: msg })
       return
     }
+
+    order.date = new Date()
 
     sequelize.transaction(t => {
       return Order.create(order, { transaction: t })

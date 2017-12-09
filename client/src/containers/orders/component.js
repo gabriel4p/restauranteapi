@@ -24,7 +24,9 @@ export default class Orders extends Component {
       return (
         <table className='ui celled table'>
           <thead>
-            <tr><th>Código</th>
+            <tr>
+              <th>Código</th>
+              <th>Mesa</th>
               <th>Quant. de items</th>
               <th>Valor</th>
               <th>Aprovar</th>
@@ -32,8 +34,8 @@ export default class Orders extends Component {
           <tbody>
             { orders.map(order =>
               <tr key={order.id}>
-                <td>{ order.id }
-                </td>
+                <td>{ order.id }</td>
+                <td>{ order.table }</td>
                 <td>{ order.items.length }</td>
                 <td>{ order.total }</td>
                 <td><div className='ui toggle checkbox'>
