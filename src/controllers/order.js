@@ -19,15 +19,21 @@ export default class Controller {
       .then(result => {
         let orders = []
         for (let i = 0; i < result.length; i++) {
-          orders.push({
+          let total = 0
+          const itens = result[i].Items
+          for (let j = 0; j < itens.length; j++)
+            total += itens[j].value
+          let order = {
             id: result[i].id,
             date: result[i].date,
             table: result[i].table,
             name: result[i].name,
             resume: result[i].resume,
             status: result[i].ok ? 'Atendido' : 'Pendente',
-            items: result[i].Items
-          })
+            items: itens,
+            total: total.toFixed(2)
+          }
+          orders.push(order)
         }
         res.json({ orders: orders })
       })
@@ -112,6 +118,7 @@ export default class Controller {
         Order.update({ ok: order.ok ? 1 : 0 }, { where: { id: order.id } })
           .then(() => {
             Token.findAll().then((tokens) => {
+              console.log(tokens.map(p => p.token))
               notification.sendMessage(tokens.map(p => p.token), 'Pedido', 'O pedido da mesa ' + orderDb.table + ' está pronto.')
                 .then(() => {
                   res.json({ data: 'Aprovado com sucesso, os atendentes foram notificados.' })

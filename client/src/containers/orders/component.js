@@ -34,8 +34,8 @@ export default class Orders extends Component {
               <tr key={order.id}>
                 <td>{ order.id }
                 </td>
-                <td>{ order.items }</td>
-                <td>{ order.value }</td>
+                <td>{ order.items.length }</td>
+                <td>{ order.total }</td>
                 <td><div className='ui toggle checkbox'>
                   <input type='checkbox' name='public' />
                   <label />
