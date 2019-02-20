@@ -15,7 +15,5 @@ const controller = new Controller()
 module.exports = function (app) {
   app.get('/image/:name', controller.get)
 
-  app.get('/imageall', controller.getAllImageNames)
-
   app.post('/image', multer.single('file'), controller.createImage)
 }

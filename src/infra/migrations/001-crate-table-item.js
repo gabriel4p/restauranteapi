@@ -1,29 +1,29 @@
-module.exports = (sequelize, DataTypes) => {
-  const Item = sequelize.define('Item', {
+module.exports = {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Item', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'Id'
     },
     category: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'Categoria'
     },
     description: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'Descricao'
     },
     name: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'Titulo'
     },
     imagePath: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'UrlImagem'
     },
     value: {
-      type: DataTypes.DECIMAL,
+      type: Sequelize.DECIMAL,
       field: 'Valor'
     }
   }, {
@@ -31,6 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       undercored: false,
       updatedAt: false,
       createdAt: false
-    })
-  return Item
+    }),
+  down: (queryInterface) => queryInterface.dropTable('Item')
 }

@@ -1,7 +1,3 @@
-import fs from 'fs'
-import path from 'path'
-import HttpStatus from 'http-status'
-import sha1 from 'sha1'
 import { Item } from '../infra/db'
 
 const categories = ['comida', 'bebida', 'sobremesa']

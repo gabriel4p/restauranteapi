@@ -1,5 +1,3 @@
-import HttpStatus from 'http-status'
-import notification from '../service/notification'
 import { sequelize, Token, Order, Item, ItemOrder } from '../infra/db'
 
 const validate = (order) => {
@@ -92,10 +90,10 @@ export default class Controller {
 
     sequelize.transaction(t => {
       return ItemOrder.destroy({ where: { orderId: id } }, { transaction: t })
-        .then(result => {
+        .then(() => {
           return Order.destroy({ where: { id: id } }, { transaction: t })
         })
-    }).then(result => res.json({ data: 'Removido com sucesso.' }))
+    }).then(() => res.json({ data: 'Removido com sucesso.' }))
       .catch(err => res.json({ data: err.message }))
   }
 
@@ -117,21 +115,7 @@ export default class Controller {
         }
 
         Order.update({ ok: order.ok ? 1 : 0 }, { where: { id: order.id } })
-          .then(() => {
-            Token.findAll().then((tokens) => {
-              console.log(tokens.map(p => p.token))
-              notification.sendMessage(tokens.map(p => p.token), 'Pedido', 'O pedido da mesa ' + orderDb.table + ' está pronto.')
-                .then(() => {
-                  res.json({ data: 'Aprovado com sucesso, os atendentes foram notificados.' })
-                }).catch((e) => {
-                  console.log(e.message)
-                  res.json({ data: 'Pedido aprovado, mas os atendentes não puderam ser notificados.' })
-                })
-            }).catch((e) => {
-              console.log(e.message)
-              res.json({ data: 'Pedido aprovado, mas os atendentes não puderam ser notificados.' })
-            })
-          })
+          .then(() => res.json({ data: 'Pedido aprovado.' }))
           .catch(err => res.json({ data: err.message }))
       })
       .catch(err => res.json({ data: err.message }))

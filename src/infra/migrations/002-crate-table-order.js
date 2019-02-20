@@ -1,29 +1,29 @@
-module.exports = (sequelize, DataTypes) => {
-  const Order = sequelize.define('Order', {
+module.exports = {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Order', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'Id'
     },
     date: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATE,
       field: 'Data'
     },
     table: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'Mesa'
     },
     name: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'Nome'
     },
     resume: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING,
       field: 'Resumo'
     },
     ok: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'Atendido'
     }
   }, {
@@ -31,6 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       undercored: false,
       updatedAt: false,
       createdAt: false
-    })
-  return Order
+    }),
+  down: (queryInterface) => queryInterface.dropTable('Order')
 }

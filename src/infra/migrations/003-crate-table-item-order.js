@@ -1,18 +1,18 @@
-export default (sequelize, DataTypes) => {
-  const ItemOrder = sequelize.define('ItemOrder', {
+module.exports = {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('ItemOrder', {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'Id'
     },
     itemId: {
       allowNull: false,
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       field: 'ItemId'
     },
     orderId: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       field: 'PedidoId'
     }
@@ -21,7 +21,6 @@ export default (sequelize, DataTypes) => {
       undercored: false,
       updatedAt: false,
       createdAt: false
-    })
-
-  return ItemOrder
+    }),
+  down: (queryInterface) => queryInterface.dropTable('ItemOrder')
 }

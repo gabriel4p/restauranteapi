@@ -1,17 +1,10 @@
 import Sequelize from 'sequelize'
-import Config from '../config'
 import fs from 'fs'
 import path from 'path'
-const connectionConfig = {
-  logging: false,
-  dialectOptions: {
-    ssl: true
-  }
-}
 
-if (!Config.DatabaseUrl) throw "Defina a string de conxão com o banco"
+import { production } from './config'
 
-const sequelize = new Sequelize(Config.DatabaseUrl, connectionConfig)
+const sequelize = new Sequelize(production)
 let db = { sequelize: sequelize }
 
 fs
