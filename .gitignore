@@ -3,3 +3,5 @@ npm-debug.log
 .env
 src/temp/*
 client/build
+retaurant.db
+public
