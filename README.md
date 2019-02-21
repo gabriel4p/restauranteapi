@@ -12,3 +12,8 @@ yarn add && cd client && yarn add && cd ..
 mv .env.example .env # Configure suas .envs
 yarn start
 ```
+
+## Criar imagem docker
+```
+docker build -t restaurante-api:1.0 .
+```
